@@ -1,0 +1,12 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Options Implied Probability Output",
+    "properties": {
+        "dataset": {
+            "type": "string",
+            "title": "Dataset link",
+            "description": "Direct link to the dataset containing options implied probabilities, probability distributions, and matrices.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}
