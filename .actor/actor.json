@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "implied-probability-intelligence",
+    "title": "Options Implied Probability & Risk-Neutral Distribution",
+    "description": "Quantitative options implied probability suite: Black-Scholes risk-neutral density, Breeden-Litzenberger PDF/CDF curves, 16D (1-Sigma) & 30D probability strikes, straddle implied move ranges, and target probability matrices.",
+    "version": "1.0",
+    "meta": {
+        "template": "python-empty"
+    },
+    "dockerfile": "../Dockerfile",
+    "input": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "output": "./output_schema.json"
+}
