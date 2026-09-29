@@ -1,0 +1,147 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "type": "object",
+        "properties": {
+            "symbol": {
+                "type": "string",
+                "title": "Symbol / Ticker"
+            },
+            "spotPrice": {
+                "type": "number",
+                "title": "Spot Price"
+            },
+            "expiration": {
+                "type": "string",
+                "title": "Expiration Date"
+            },
+            "dte": {
+                "type": "integer",
+                "title": "DTE (Days)"
+            },
+            "atmStrike": {
+                "type": "number",
+                "title": "ATM Strike"
+            },
+            "straddlePrice": {
+                "type": "number",
+                "title": "ATM Straddle ($)"
+            },
+            "impliedMovePct": {
+                "type": "number",
+                "title": "Implied Move (%)"
+            },
+            "impliedMoveUpper": {
+                "type": "number",
+                "title": "Upper Bound ($)"
+            },
+            "impliedMoveLower": {
+                "type": "number",
+                "title": "Lower Bound ($)"
+            },
+            "probWithinMovePct": {
+                "type": "number",
+                "title": "Prob Inside Range (%)"
+            },
+            "strike16dAbove": {
+                "type": "number",
+                "title": "16D Strike (Above)"
+            },
+            "strike16dBelow": {
+                "type": "number",
+                "title": "16D Strike (Below)"
+            },
+            "strike30dAbove": {
+                "type": "number",
+                "title": "30D Strike (Above)"
+            },
+            "strike30dBelow": {
+                "type": "number",
+                "title": "30D Strike (Below)"
+            },
+            "medianProbStrike50d": {
+                "type": "number",
+                "title": "50D Median Strike"
+            },
+            "calculatedAt": {
+                "type": "string",
+                "title": "Calculated At"
+            }
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "Implied Probabilities Overview",
+            "description": "Executive dashboard of options implied move ranges, 16-Delta / 30-Delta probability boundaries, and risk-neutral median strikes.",
+            "transformation": {
+                "fields": [
+                    "symbol",
+                    "spotPrice",
+                    "expiration",
+                    "dte",
+                    "impliedMovePct",
+                    "impliedMoveUpper",
+                    "impliedMoveLower",
+                    "probWithinMovePct",
+                    "strike16dAbove",
+                    "strike16dBelow",
+                    "strike30dAbove",
+                    "strike30dBelow"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "columns": {
+                    "symbol": {
+                        "label": "Ticker",
+                        "format": "text"
+                    },
+                    "spotPrice": {
+                        "label": "Spot",
+                        "format": "number"
+                    },
+                    "expiration": {
+                        "label": "Expiry",
+                        "format": "text"
+                    },
+                    "dte": {
+                        "label": "DTE",
+                        "format": "number"
+                    },
+                    "impliedMovePct": {
+                        "label": "Exp Move %",
+                        "format": "percentage"
+                    },
+                    "impliedMoveUpper": {
+                        "label": "Upper Range",
+                        "format": "number"
+                    },
+                    "impliedMoveLower": {
+                        "label": "Lower Range",
+                        "format": "number"
+                    },
+                    "probWithinMovePct": {
+                        "label": "Prob Inside %",
+                        "format": "percentage"
+                    },
+                    "strike16dAbove": {
+                        "label": "16D Upper (84% P)",
+                        "format": "number"
+                    },
+                    "strike16dBelow": {
+                        "label": "16D Lower (16% P)",
+                        "format": "number"
+                    },
+                    "strike30dAbove": {
+                        "label": "30D Upper (70% P)",
+                        "format": "number"
+                    },
+                    "strike30dBelow": {
+                        "label": "30D Lower (30% P)",
+                        "format": "number"
+                    }
+                }
+            }
+        }
+    }
+}
