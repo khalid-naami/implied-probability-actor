@@ -1,0 +1,44 @@
+{
+    "title": "Options Implied Probability Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "symbols": {
+            "title": "Target Tickers / Equities",
+            "type": "array",
+            "description": "List of tickers or optionable equities/indices to calculate implied probability distributions for (e.g. SPY, QQQ, AAPL, NVDA, TSLA).",
+            "editor": "json",
+            "prefill": ["SPY", "QQQ", "AAPL", "NVDA", "TSLA"],
+            "default": ["SPY", "QQQ", "AAPL", "NVDA", "TSLA"]
+        },
+        "riskFreeRate": {
+            "title": "Risk-Free Interest Rate (Annualized)",
+            "type": "number",
+            "description": "Risk-free interest rate (e.g. 0.045 = 4.5%).",
+            "default": 0.045,
+            "minimum": 0.0,
+            "maximum": 0.20
+        },
+        "includeFullDistribution": {
+            "title": "Include Full Probability Distribution (CDF & PDF)",
+            "type": "boolean",
+            "description": "Calculate strike-by-strike risk-neutral Probability Above, Probability Below, and PDF density across all strikes.",
+            "default": true
+        },
+        "includeProbabilityMatrix": {
+            "title": "Include Target Probability Matrix (10% to 90%)",
+            "type": "boolean",
+            "description": "Include standard 13-level probability grid (10%, 16%, 20%, 25%, 30%, 40%, 50%, 60%, 70%, 75%, 80%, 84%, 90%).",
+            "default": true
+        },
+        "maxExpirationsPerSymbol": {
+            "title": "Max Expirations Per Symbol",
+            "type": "integer",
+            "description": "Number of nearest expiration cycles to analyze per symbol.",
+            "default": 2,
+            "minimum": 1,
+            "maximum": 10
+        }
+    },
+    "required": ["symbols"]
+}
