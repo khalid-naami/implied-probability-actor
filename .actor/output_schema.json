@@ -2,11 +2,17 @@
     "actorOutputSchemaVersion": 1,
     "title": "Options Implied Probability Output",
     "properties": {
-        "dataset": {
+        "results": {
             "type": "string",
-            "title": "Dataset link",
-            "description": "Direct link to the dataset containing options implied probabilities, probability distributions, and matrices.",
+            "title": "Dataset Items",
+            "description": "Dataset items and records produced by the Actor",
             "template": "{{links.apiDefaultDatasetUrl}}/items"
+        },
+        "overview": {
+            "type": "string",
+            "title": "Summary Payload",
+            "description": "Summary report stored in Key-Value store",
+            "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/OUTPUT"
         }
     }
 }
