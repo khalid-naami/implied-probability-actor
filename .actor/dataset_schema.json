@@ -1,71 +1,100 @@
 {
     "actorSpecification": 1,
     "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
+        "additionalProperties": true,
+        "required": [],
         "properties": {
             "symbol": {
                 "type": "string",
-                "title": "Symbol / Ticker"
+                "title": "Symbol / Ticker",
+                "nullable": true
             },
             "spotPrice": {
                 "type": "number",
-                "title": "Spot Price"
+                "title": "Spot Price",
+                "nullable": true
             },
-            "expiration": {
+            "expirationDate": {
                 "type": "string",
-                "title": "Expiration Date"
+                "title": "Expiration Date",
+                "nullable": true
             },
-            "dte": {
-                "type": "integer",
-                "title": "DTE (Days)"
+            "daysToExpiration": {
+                "type": "number",
+                "title": "DTE (Days)",
+                "nullable": true
             },
             "atmStrike": {
                 "type": "number",
-                "title": "ATM Strike"
+                "title": "ATM Strike",
+                "nullable": true
             },
-            "straddlePrice": {
+            "atmImpliedVolatilityPct": {
                 "type": "number",
-                "title": "ATM Straddle ($)"
+                "title": "ATM IV (%)",
+                "nullable": true
+            },
+            "atmStraddlePrice": {
+                "type": "number",
+                "title": "ATM Straddle ($)",
+                "nullable": true
+            },
+            "impliedMoveUsd": {
+                "type": "number",
+                "title": "Implied Move ($)",
+                "nullable": true
             },
             "impliedMovePct": {
                 "type": "number",
-                "title": "Implied Move (%)"
+                "title": "Implied Move (%)",
+                "nullable": true
             },
-            "impliedMoveUpper": {
+            "lowerImpliedBound": {
                 "type": "number",
-                "title": "Upper Bound ($)"
+                "title": "Lower Bound ($)",
+                "nullable": true
             },
-            "impliedMoveLower": {
+            "upperImpliedBound": {
                 "type": "number",
-                "title": "Lower Bound ($)"
+                "title": "Upper Bound ($)",
+                "nullable": true
             },
-            "probWithinMovePct": {
+            "probInsideMovePct": {
                 "type": "number",
-                "title": "Prob Inside Range (%)"
+                "title": "Prob Inside Range (%)",
+                "nullable": true
             },
-            "strike16dAbove": {
+            "delta16LowerStrike": {
                 "type": "number",
-                "title": "16D Strike (Above)"
+                "title": "16D Lower Strike",
+                "nullable": true
             },
-            "strike16dBelow": {
+            "delta16UpperStrike": {
                 "type": "number",
-                "title": "16D Strike (Below)"
+                "title": "16D Upper Strike",
+                "nullable": true
             },
-            "strike30dAbove": {
+            "delta30LowerStrike": {
                 "type": "number",
-                "title": "30D Strike (Above)"
+                "title": "30D Lower Strike",
+                "nullable": true
             },
-            "strike30dBelow": {
+            "delta30UpperStrike": {
                 "type": "number",
-                "title": "30D Strike (Below)"
+                "title": "30D Upper Strike",
+                "nullable": true
             },
-            "medianProbStrike50d": {
+            "riskNeutralMedianStrike": {
                 "type": "number",
-                "title": "50D Median Strike"
+                "title": "50D Median Strike",
+                "nullable": true
             },
-            "calculatedAt": {
+            "updatedAt": {
                 "type": "string",
-                "title": "Calculated At"
+                "title": "Updated At",
+                "nullable": true
             }
         }
     },
@@ -77,21 +106,25 @@
                 "fields": [
                     "symbol",
                     "spotPrice",
-                    "expiration",
-                    "dte",
+                    "expirationDate",
+                    "daysToExpiration",
+                    "atmStrike",
+                    "atmImpliedVolatilityPct",
+                    "atmStraddlePrice",
                     "impliedMovePct",
-                    "impliedMoveUpper",
-                    "impliedMoveLower",
-                    "probWithinMovePct",
-                    "strike16dAbove",
-                    "strike16dBelow",
-                    "strike30dAbove",
-                    "strike30dBelow"
+                    "upperImpliedBound",
+                    "lowerImpliedBound",
+                    "probInsideMovePct",
+                    "delta16UpperStrike",
+                    "delta16LowerStrike",
+                    "delta30UpperStrike",
+                    "delta30LowerStrike",
+                    "riskNeutralMedianStrike"
                 ]
             },
             "display": {
                 "component": "table",
-                "columns": {
+                "properties": {
                     "symbol": {
                         "label": "Ticker",
                         "format": "text"
@@ -100,44 +133,60 @@
                         "label": "Spot",
                         "format": "number"
                     },
-                    "expiration": {
+                    "expirationDate": {
                         "label": "Expiry",
                         "format": "text"
                     },
-                    "dte": {
+                    "daysToExpiration": {
                         "label": "DTE",
+                        "format": "number"
+                    },
+                    "atmStrike": {
+                        "label": "ATM Strike",
+                        "format": "number"
+                    },
+                    "atmImpliedVolatilityPct": {
+                        "label": "ATM IV (%)",
+                        "format": "number"
+                    },
+                    "atmStraddlePrice": {
+                        "label": "ATM Straddle ($)",
                         "format": "number"
                     },
                     "impliedMovePct": {
                         "label": "Exp Move %",
-                        "format": "percentage"
+                        "format": "number"
                     },
-                    "impliedMoveUpper": {
+                    "upperImpliedBound": {
                         "label": "Upper Range",
                         "format": "number"
                     },
-                    "impliedMoveLower": {
+                    "lowerImpliedBound": {
                         "label": "Lower Range",
                         "format": "number"
                     },
-                    "probWithinMovePct": {
+                    "probInsideMovePct": {
                         "label": "Prob Inside %",
-                        "format": "percentage"
+                        "format": "number"
                     },
-                    "strike16dAbove": {
+                    "delta16UpperStrike": {
                         "label": "16D Upper (84% P)",
                         "format": "number"
                     },
-                    "strike16dBelow": {
+                    "delta16LowerStrike": {
                         "label": "16D Lower (16% P)",
                         "format": "number"
                     },
-                    "strike30dAbove": {
+                    "delta30UpperStrike": {
                         "label": "30D Upper (70% P)",
                         "format": "number"
                     },
-                    "strike30dBelow": {
+                    "delta30LowerStrike": {
                         "label": "30D Lower (30% P)",
+                        "format": "number"
+                    },
+                    "riskNeutralMedianStrike": {
+                        "label": "50D Median Strike",
                         "format": "number"
                     }
                 }
