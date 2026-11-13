@@ -1,0 +1,15 @@
+{
+    "actorKeyValueStoreSchemaVersion": 1,
+    "title": "Options Implied Probability Key-Value Store",
+    "description": "Comprehensive summary payload for Options Implied Probability & Risk-Neutral Distribution.",
+    "collections": {
+        "output": {
+            "title": "Implied Probability Summary",
+            "description": "Hierarchical report of implied moves, 13-tier target probability matrices, and strike-by-strike risk-neutral densities.",
+            "key": "OUTPUT",
+            "contentTypes": [
+                "application/json"
+            ]
+        }
+    }
+}
