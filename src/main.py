@@ -2,6 +2,7 @@
 
 import asyncio
 import logging
+import math
 import sys
 from datetime import datetime, timezone
 from typing import Dict, List, Any
@@ -16,6 +17,24 @@ logging.basicConfig(
     handlers=[logging.StreamHandler(sys.stdout)]
 )
 logger = logging.getLogger("implied-probability-actor")
+
+
+def sanitize_record(obj: Any) -> Any:
+    """Recursively strip None and non-finite floats before pushing to Apify dataset."""
+    if obj is None:
+        return None
+    if isinstance(obj, float):
+        return obj if math.isfinite(obj) else None
+    if isinstance(obj, list):
+        return [v for v in (sanitize_record(x) for x in obj) if v is not None]
+    if isinstance(obj, dict):
+        clean = {}
+        for k, v in obj.items():
+            sv = sanitize_record(v)
+            if sv is not None:
+                clean[k] = sv
+        return clean
+    return obj
 
 
 async def main() -> None:
@@ -36,9 +55,9 @@ async def main() -> None:
         risk_free_rate = float(actor_input.get("riskFreeRate", 0.045))
         include_full_dist = bool(actor_input.get("includeFullDistribution", True))
         include_prob_matrix = bool(actor_input.get("includeProbabilityMatrix", True))
-        max_expirations = int(actor_input.get("maxExpirationsPerSymbol", 4))
+        max_expirations = int(actor_input.get("maxExpirationsPerSymbol", 2))
 
-        logger.info(f"Starting Implied Probability Intelligence Actor...")
+        logger.info("Starting Implied Probability Intelligence Actor...")
         logger.info(f"Target symbols: {symbols}")
         logger.info(f"Risk-free rate: {risk_free_rate * 100:.2f}%, Max Expirations: {max_expirations}")
 
@@ -81,7 +100,7 @@ async def main() -> None:
                         symbol_expirations.append(metrics)
                         
                         # Flat record for Dataset table view
-                        dataset_records.append({
+                        dataset_records.append(sanitize_record({
                             "symbol": symbol,
                             "spotPrice": spot_price,
                             "expirationDate": exp_date,
@@ -100,7 +119,7 @@ async def main() -> None:
                             "delta30UpperStrike": metrics["delta30UpperStrike"],
                             "riskNeutralMedianStrike": metrics["riskNeutralMedianStrike"],
                             "updatedAt": datetime.now(timezone.utc).isoformat()
-                        })
+                        }))
 
                 if symbol_expirations:
                     all_results.append({
@@ -131,6 +150,9 @@ async def main() -> None:
             "results": all_results
         }
         await Actor.set_value("OUTPUT", output_payload)
+        if not dataset_records:
+            await Actor.fail(status_message="No implied probability records were generated.")
+            return
 
         logger.info(f"Implied Probability Actor completed successfully! Processed {len(all_results)} symbols across {len(dataset_records)} expiration cycles.")
 
